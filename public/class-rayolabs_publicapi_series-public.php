@@ -138,8 +138,8 @@ class Rayolabs_publicapi_series_Public {
     		 $content = $post->content;
     		 $category = $post->name;
     		 $tags 		= $source;
-
-    		 $featured_image = "";
+			
+    		 $featured_image = $post->image_link;
     		 if($this->options['categories'] == 'yes'){
     		 //Check If Category Exist If not Create Them
     		 $category_id = get_cat_ID($category);
@@ -210,11 +210,11 @@ class Rayolabs_publicapi_series_Public {
 	// $rescode = curl_getinfo($ch, CURLINFO_HTTP_CODE); 
 	// curl_close($ch) ;
 	// echo $res;
-    $filename = basename($image_url);
+    $filename = md5(basename($image_url)).".png";
     if(wp_mkdir_p($upload_dir['path']))     $file = $upload_dir['path'] . '/' . $filename;
     else                                    $file = $upload_dir['basedir'] . '/' . $filename;
     file_put_contents($file, $image_data);
-
+	
     $wp_filetype = wp_check_filetype($filename, null );
     $attachment = array(
         'post_mime_type' => $wp_filetype['type'],
